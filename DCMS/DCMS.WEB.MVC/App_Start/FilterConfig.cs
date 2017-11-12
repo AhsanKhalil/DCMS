@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace DCMS.WEB.MCV
+namespace DCMS.WEB.MVC
 {
     public class FilterConfig
     {
