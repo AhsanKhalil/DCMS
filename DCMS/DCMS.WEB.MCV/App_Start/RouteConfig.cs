@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace DC.WEB.MVC
+namespace DCMS.WEB.MCV
 {
     public class RouteConfig
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DC.WEB.MVC")]
+[assembly: AssemblyTitle("DCMS.WEB.MCV")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DC.WEB.MVC")]
+[assembly: AssemblyProduct("DCMS.WEB.MCV")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b7cbd8bc-7feb-4924-8564-88665078ee58")]
+[assembly: Guid("440a50ce-1ad3-45ef-9dbf-2c6d196ce9c7")]
 
 // Version information for an assembly consists of the following four values:
 //

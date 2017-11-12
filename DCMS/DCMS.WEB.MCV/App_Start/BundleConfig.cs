@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace DC.WEB.MVC
+namespace DCMS.WEB.MCV
 {
     public class BundleConfig
     {
