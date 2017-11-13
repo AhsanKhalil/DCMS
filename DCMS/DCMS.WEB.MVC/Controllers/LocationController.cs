@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using DataObjects.Linq2SQL;
+using DataObjects.Linq2SQL.Data;
 using DCMS.WEB.MVC.Models;
 
 namespace DCMS.WEB.MVC.Controllers
 {
     public class LocationController : BaseController
     {
-        DCMS_DATA_1DataContext dataContext;
-
+        
         public LocationController()
         {
         }
@@ -21,12 +20,9 @@ namespace DCMS.WEB.MVC.Controllers
         {
             try
             {
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-                    dataContext.DeferredLoadingEnabled = false;
-                    List<LOCATION> locations = dataContext.LOCATIONs.ToList();
-                    return View(locations);
-                }
+                List<LOCATION> locations = DCService.GetAllLocation();
+                 return View(locations);
+                
             }
             catch (Exception e)
             {
@@ -40,11 +36,10 @@ namespace DCMS.WEB.MVC.Controllers
         {
             try
             {
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-                    LOCATION location = dataContext.LOCATIONs.FirstOrDefault(m => m.ID == id);
-                    return View(location);
-                }
+
+                LOCATION location = DCService.GetLocation(id);
+                return View(location);
+                
             }
             catch (Exception e)
             {
@@ -64,25 +59,17 @@ namespace DCMS.WEB.MVC.Controllers
         {
             try
             {
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-
-                    if (dataContext.LOCATIONs.Count() != 0)
-                        location.ID = dataContext.LOCATIONs.Select(m => m.ID).Max() + 1;
-                    else
-                        location.ID = 1;
+                
                     
-                    location.CREATED_ON = DATE;
-                    location.MODIFIED_ON = DATE;
-                    location.CREATED_USER = USER;
-                    location.MODIFIED_USER = USER;
+                location.CREATED_ON = DATE;
+                location.MODIFIED_ON = DATE;
+                location.CREATED_USER = USER;
+                location.MODIFIED_USER = USER;
 
-                    dataContext.LOCATIONs.InsertOnSubmit(location);
-                    dataContext.SubmitChanges();
-                }
+                DCService.SaveLocation(location);
                     // TODO: Add insert logic here
 
-                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
@@ -94,12 +81,11 @@ namespace DCMS.WEB.MVC.Controllers
         public ActionResult Edit(int id)
         {
             try
-            { 
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-                    LOCATION location = dataContext.LOCATIONs.FirstOrDefault(m=>m.ID==id);
-                    return View(location);
-                }
+            {
+
+                LOCATION location = DCService.GetLocation(id);
+                return View(location);
+                
             }
             catch (Exception e)
             {
@@ -113,26 +99,14 @@ namespace DCMS.WEB.MVC.Controllers
         {
             try
             {
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-                    LOCATION orignalLoca = dataContext.LOCATIONs.FirstOrDefault(m => m.ID == location.ID);
+                
+                location.MODIFIED_ON = DATE;
+                location.MODIFIED_USER = USER;
 
+                DCService.UpdateLocation(location);
 
-                    orignalLoca.ADDRESS = location.ADDRESS;
-                    orignalLoca.CITY = location.CITY;
-                    orignalLoca.CONTACT_1 = location.CONTACT_1;
-                    orignalLoca.CONTACT_2 = location.CONTACT_2;
-                    orignalLoca.CONTACT_3 = location.CONTACT_3;
-                    orignalLoca.EMAIL = location.EMAIL;
-                    orignalLoca.FAX_NO = location.FAX_NO;
-                    orignalLoca.MODIFIED_ON = DATE;
-                    orignalLoca.MODIFIED_USER = USER;
-                    orignalLoca.NAME = location.NAME;
-
-                    dataContext.SubmitChanges();
-
-                    return RedirectToAction("Index");
-                }
+                return RedirectToAction("Index");
+                
             }
             catch (Exception e)
             {
@@ -145,13 +119,9 @@ namespace DCMS.WEB.MVC.Controllers
         {
             try
             {
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-                    LOCATION location = (from LOCATIONs in dataContext.LOCATIONs
-                                         where LOCATIONs.ID == id
-                                         select LOCATIONs).FirstOrDefault();
-                    return View(location);
-                }
+                LOCATION location = DCService.GetLocation(id);
+                return View(location);
+                
             }
             catch (Exception e)
             {
@@ -166,15 +136,10 @@ namespace DCMS.WEB.MVC.Controllers
         {
             try
             {
-                using (dataContext = new DCMS_DATA_1DataContext())
-                {
-                    LOCATION getlocation = dataContext.LOCATIONs.FirstOrDefault(m => m.ID == id);
+                DCService.DeleteLocation(id);
 
-                    dataContext.LOCATIONs.DeleteOnSubmit(getlocation);
-                    dataContext.SubmitChanges();
-
-                    return RedirectToAction("Index");
-                }
+                return RedirectToAction("Index");
+                   
             }
             catch (Exception e)
             {

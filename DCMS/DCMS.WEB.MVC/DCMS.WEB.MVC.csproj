@@ -218,6 +218,10 @@
       <Project>{fdaac2eb-227a-4a22-8f8d-e13528dffa50}</Project>
       <Name>DataObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DCMS.SERVICE\DCMS.SERVICE.csproj">
+      <Project>{4c036935-2684-4d1b-92fb-e1401f18a674}</Project>
+      <Name>DCMS.SERVICE</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

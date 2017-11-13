@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace DataObjects.Linq2SQL
+namespace DataObjects.Linq2SQL.MetaData
 {
     public class LocationMetaData
     {

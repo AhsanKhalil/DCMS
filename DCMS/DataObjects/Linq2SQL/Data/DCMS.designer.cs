@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataObjects.Linq2SQL
+namespace DataObjects.Linq2SQL.Data
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
@@ -23,7 +23,7 @@ namespace DataObjects.Linq2SQL
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="DCMS")]
-	public partial class DCMS_DATA_1DataContext : System.Data.Linq.DataContext
+	public partial class DCMSDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -59,31 +59,31 @@ namespace DataObjects.Linq2SQL
     partial void DeleteSCHEDULE(SCHEDULE instance);
     #endregion
 		
-		public DCMS_DATA_1DataContext() : 
+		public DCMSDataContext() : 
 				base(global::DataObjects.Properties.Settings.Default.DCMSConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DCMS_DATA_1DataContext(string connection) : 
+		public DCMSDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DCMS_DATA_1DataContext(System.Data.IDbConnection connection) : 
+		public DCMSDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DCMS_DATA_1DataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public DCMSDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DCMS_DATA_1DataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public DCMSDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
