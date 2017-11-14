@@ -1,4 +1,4 @@
-﻿@model DCMS.WEB.MVC.Models.Error
+﻿@model DCMS.WEB.MVC.Models.Message
 
 @{
     ViewBag.Title = "Error";
@@ -7,7 +7,7 @@
 
 <h2>Error</h2>
 <h3>Details</h3>
-<p>@Html.DisplayFor(m => m.Message)</p>
+<p>@Html.DisplayFor(m => m.Description)</p>
 
 <div>
     @Html.ActionLink("Back to List", "Index")

@@ -13,6 +13,7 @@ namespace DCMS.WEB.MVC.Controllers
         
         public LocationController()
         {
+            TempData["MESSAGE"] = null;
         }
 
         // GET: Location
@@ -21,12 +22,13 @@ namespace DCMS.WEB.MVC.Controllers
             try
             {
                 List<LOCATION> locations = DCService.GetAllLocation();
-                 return View(locations);
+            
+                return View(locations);
                 
             }
             catch (Exception e)
             {
-                return View("Error", new Error() { Message = e.Message });
+                return View("Error", new Message() { Description = e.Message });
             }
 
         }
@@ -43,12 +45,12 @@ namespace DCMS.WEB.MVC.Controllers
             }
             catch (Exception e)
             {
-                return View("Error", new Error() { Message = e.Message });
+                return View("Error", new Message() { Description = e.Message });
             }
-}
+        }
 
         // GET: Location/Create
-        public ActionResult Create()
+        public ActionResult Create(string msg=null)
         {
             return View();
         }
@@ -57,23 +59,31 @@ namespace DCMS.WEB.MVC.Controllers
         [HttpPost]
         public ActionResult Create(LOCATION location)
         {
-            try
+            if (ModelState.IsValid)
             {
-                
-                    
-                location.CREATED_ON = DATE;
-                location.MODIFIED_ON = DATE;
-                location.CREATED_USER = USER;
-                location.MODIFIED_USER = USER;
+                try
+                {
+                    location.CREATED_ON = DATE;
+                    location.MODIFIED_ON = DATE;
+                    location.CREATED_USER = USER;
+                    location.MODIFIED_USER = USER;
 
-                DCService.SaveLocation(location);
+                    DCService.SaveLocation(location);
                     // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                    
+                    TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
+                    return RedirectToAction("Index", "Location");
+                }
+                catch (Exception e)
+                {
+                    TempData["MESSAGE"] = new Message() {Type=MessageType.Error,Description=e.Message };
+                    return View(location);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return View("Error", new Error() { Message = e.Message });
+                TempData["MESSAGE"] = new Message() { Type = MessageType.Error, Description = "Please fill all required fields with valid data." };
+                return View(location);
             }
         }
 
@@ -89,7 +99,8 @@ namespace DCMS.WEB.MVC.Controllers
             }
             catch (Exception e)
             {
-                return View("Error", new Error() { Message = e.Message });
+                return View("Error", new Message() { Description = e.Message });
+
             }
         }
 
@@ -97,53 +108,61 @@ namespace DCMS.WEB.MVC.Controllers
         [HttpPost]
         public ActionResult Edit(int id, LOCATION location)
         {
-            try
+            if (ModelState.IsValid)
             {
-                
-                location.MODIFIED_ON = DATE;
-                location.MODIFIED_USER = USER;
+                try
+                {
 
-                DCService.UpdateLocation(location);
+                    location.MODIFIED_ON = DATE;
+                    location.MODIFIED_USER = USER;
 
-                return RedirectToAction("Index");
-                
+                    DCService.UpdateLocation(location);
+
+                    TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
+
+                    return RedirectToAction("Index", "Location");
+
+                }
+                catch (Exception e)
+                {
+                    return View("Error", new Message() { Description = e.Message });
+                }
             }
-            catch (Exception e)
-            {
-                return View("Error", new Error() { Message = e.Message });
-            }
+            return RedirectToAction("Edit", id);
         }
 
         // GET: Location/Delete/5
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                LOCATION location = DCService.GetLocation(id);
-                return View(location);
+        //public ActionResult Delete(int id)
+        //{
+        //    try
+        //    {
+        //        LOCATION location = DCService.GetLocation(id);
+        //        return View(location);
                 
-            }
-            catch (Exception e)
-            {
-                return View("Error", new Error() { Message = e.Message });
-            }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return View("Error", new Message() { Description = e.Message });
+        //    }
 
-        }
+        //}
 
         // POST: Location/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, LOCATION location)
+  
+        public ActionResult Delete(int id)//, LOCATION location)
         {
             try
             {
                 DCService.DeleteLocation(id);
+                
 
-                return RedirectToAction("Index");
-                   
+                TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Delete Successfully." };
+                return RedirectToAction("Index", "Location");
+
             }
             catch (Exception e)
             {
-                return View("Error", new Error() { Message = e.Message });
+                return View("Error", new Message() { Description = e.Message });
             }
         }
     }

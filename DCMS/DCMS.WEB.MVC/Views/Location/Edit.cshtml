@@ -1,4 +1,6 @@
-﻿@model DataObjects.Linq2SQL.Data.LOCATION
+﻿@using DCMS.WEB.MVC.Models;
+
+@model DataObjects.Linq2SQL.Data.LOCATION
 
 @{
     ViewBag.Title = "Edit";
@@ -94,6 +96,38 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+@{
+    if (TempData["MESSAGE"] != null)
+    {
+        Message message = (Message)TempData["MESSAGE"];
+        string finalMsg = "";
+
+        if (message.Type == MessageType.Error)
+        {
+            finalMsg = "Error: " + message.Description;
+        }
+        else
+        {
+            finalMsg = message.Description;
+        }
+
+        <script>
+            window.onload = function () {
+
+                //alert("@finalMsg");
+                $("#PopUpMessage").text("@finalMsg");
+                $("#ModelButton").click();
+            };
+
+
+
+        </script>
+
+
+    }
 }
