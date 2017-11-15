@@ -2,12 +2,14 @@
 
 @model DataObjects.Linq2SQL.Data.LOCATION
 
-@{
+@*@{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<h2>Create</h2>
+}*@
+@*<h2>Create</h2>*@
 
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 @using (Html.BeginForm()) 
 {
@@ -88,6 +90,8 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
+                &nbsp;
+                <input type="button" id="btnCancel" value="Cancel" class="cancel" />
             </div>
         </div>
     </div>
@@ -104,7 +108,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-@{
+
+
+@*@{
     if (TempData["MESSAGE"] != null)
     {
         Message message = (Message)TempData["MESSAGE"];
@@ -134,4 +140,4 @@
 
 
     }
-}
+}*@

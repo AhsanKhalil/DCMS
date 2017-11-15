@@ -40,7 +40,7 @@ namespace DCMS.WEB.MVC.Controllers
             {
 
                 LOCATION location = DCService.GetLocation(id);
-                return View(location);
+                return PartialView(location);
                 
             }
             catch (Exception e)
@@ -52,7 +52,7 @@ namespace DCMS.WEB.MVC.Controllers
         // GET: Location/Create
         public ActionResult Create(string msg=null)
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Location/Create
@@ -70,8 +70,11 @@ namespace DCMS.WEB.MVC.Controllers
 
                     DCService.SaveLocation(location);
                     // TODO: Add insert logic here
-                    
-                    TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
+
+                    //TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
+
+                    TempData["Message"] = "Data has been saved successfully!";
+
                     return RedirectToAction("Index", "Location");
                 }
                 catch (Exception e)
@@ -94,7 +97,7 @@ namespace DCMS.WEB.MVC.Controllers
             {
 
                 LOCATION location = DCService.GetLocation(id);
-                return View(location);
+                return PartialView(location);
                 
             }
             catch (Exception e)
@@ -118,7 +121,9 @@ namespace DCMS.WEB.MVC.Controllers
 
                     DCService.UpdateLocation(location);
 
-                    TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
+                    //TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
+
+                    TempData["Message"] = "Data has been updated successfully!";
 
                     return RedirectToAction("Index", "Location");
 
@@ -156,7 +161,10 @@ namespace DCMS.WEB.MVC.Controllers
                 DCService.DeleteLocation(id);
                 
 
-                TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Delete Successfully." };
+                //TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Delete Successfully." };
+
+                TempData["Message"] = "Data has been deleted successfully!";
+
                 return RedirectToAction("Index", "Location");
 
             }

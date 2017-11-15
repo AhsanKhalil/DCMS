@@ -4,13 +4,142 @@
 
 @{
     ViewBag.Title = "Location";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@*----------------------------------------------------------------------------------------------------------*@
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        var url = "";
+        var Title = "";
+        $("#dialogCreate").dialog({
+            width: 400,
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-titlebar-close").remove();
+                $(".ui-dialog-title").html(Title);
+                // $(".ui-dialog-titlebar").removeClass("ui-widget-header");
+                $(this).load(url);
+            },
+        });
+
+        $("#dialogConfirm").dialog({
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-title").html("Confirm");
+
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); },
+                Ok: function () {
+                    window.location.href = url;
+                }
+            },
+        });
+
+        $("#dialogAlert").dialog({
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-title").html("Alert");
+
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); },
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            },
+        });
+
+        $("#dialogDetails").dialog({
+            title: "User Details",
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-titlebar-close").hide();
+                $(".ui-dialog-title").html("Details");
+                $(this).load(url);
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); },
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            },
+        });
+
+        if ('@TempData["Message"]' != "") {
+            $("#dialogAlert").dialog("open");
+        }
+
+
+        $("#btnCreate").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            Title = "Create User";
+            $("#dialogCreate").dialog("open");
+        });
+
+        $(".delete").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            $("#dialogConfirm").dialog("open");
+        });
+
+        $(".details").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            $("#dialogDetails").dialog("open");
+        });
+
+        
+        $(".edit").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            Title = "Edit User";
+            $("#dialogCreate").dialog("open");
+        });
+
+        $("#btnCancel").click(function (event) {
+            $("#dialogCreate").dialog("close");
+        });
+        
+
+
+    });
+</script>
+
+
+<div id="dialogAlert">
+    <p>
+        @TempData["Message"]
+</p>
+</div>
+<div id="dialogConfirm">
+    <p>
+        Are you sure to delete?
+    </p>
+</div>
+
+<div id="dialogCreate">
+</div>
+
+<div id="dialogDetails">
+</div>
+
+@*----------------------------------------------------------------------------------------------------------*@
 
 <h2>Locations</h2>
 
 <p>
-    @Html.ActionLink("New", "Create")
+    @Html.ActionLink("New", "Create", null, new { id = "btnCreate" })
 </p>
 <table class="table">
     <tr>
@@ -92,8 +221,8 @@
             @Html.DisplayFor(modelItem => item.MODIFIED_USER)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }, new { @class = "edit" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }, new { @class = "details" }) |
             @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
             @Html.ActionLink("Delete","Delete",new { id=item.ID },new { onclick = "return confirm('Are you sure to delete?');" })
         </td>
@@ -103,7 +232,7 @@
 </table>
 
 
-@{
+@*@{
     if (TempData["MESSAGE"] != null)
     {
         Message message = (Message)TempData["MESSAGE"];
@@ -132,4 +261,4 @@
 
 
     }
-}
+}*@
