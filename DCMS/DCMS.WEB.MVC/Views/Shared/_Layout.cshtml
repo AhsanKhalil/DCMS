@@ -9,6 +9,7 @@
 
 
     @Scripts.Render("~/bundles/jquery")
+
 </head>
 <body>
 
@@ -21,7 +22,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
+                    <h4 class="modal-title">Message</h4>
                 </div>
                 <div class="modal-body">
                     <p id="PopUpMessage">This is a small modal.</p>
@@ -45,6 +46,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Organization", "Index", "Organization")</li>
                     <li>@Html.ActionLink("Location", "Index", "Location")</li>
                 </ul>
             </div>

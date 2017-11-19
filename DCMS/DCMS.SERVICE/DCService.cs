@@ -29,6 +29,7 @@ namespace DCMS.SERVICE
             }
         }
 
+        #region Location
         public List<LOCATION> GetAllLocation()
         {
             return locationDao.GetAll();
@@ -48,6 +49,33 @@ namespace DCMS.SERVICE
         public void DeleteLocation(int id)
         {
             locationDao.Delete(id);
+        }
+        #endregion 
+
+
+        public List<ORGANIZATION> GetAllOrganization()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ORGANIZATION GetOrganization(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveOrganization(ORGANIZATION organization)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateOrganization(ORGANIZATION organization)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteOrganization(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

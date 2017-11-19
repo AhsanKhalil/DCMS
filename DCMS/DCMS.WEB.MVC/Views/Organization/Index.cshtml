@@ -1,0 +1,250 @@
+﻿@using DCMS.WEB.MVC.Models;
+
+@model IEnumerable<DataObjects.Linq2SQL.Data.ORGANIZATION>
+
+@{
+    ViewBag.Title = "Organization";
+}
+
+<script>
+    $(document).ready(function () {
+        var url = "";
+        var Title = "";
+        $("#dialogCreate").dialog({
+            width: 400,
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-titlebar-close").remove();
+                $(".ui-dialog-title").html(Title);
+                // $(".ui-dialog-titlebar").removeClass("ui-widget-header");
+                $(this).load(url);
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); }
+            },
+        });
+
+        $("#dialogConfirm").dialog({
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-title").html("Confirm");
+
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); },
+                Ok: function () {
+                    window.location.href = url;
+                }
+            },
+        });
+
+        $("#dialogAlert").dialog({
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-title").html("Alert");
+
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); },
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            },
+        });
+
+        $("#dialogDetails").dialog({
+            title: "User Details",
+            modal: true,
+            autoOpen: false,
+            open: function () {
+                $(".ui-dialog-titlebar-close").hide();
+                $(".ui-dialog-title").html("Details");
+                $(this).load(url);
+            },
+            buttons: {
+                Ok: function () {
+                    $(this).dialog("close");
+                }
+            },
+        });
+
+        @*if ('@TempData["Message"]' != "") {
+            $("#dialogAlert").dialog("open");
+        }*@
+
+
+        $("#btnCreate").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            Title = "Create Location";
+            $("#dialogCreate").dialog("open");
+        });
+
+        $(".delete").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            $("#dialogConfirm").dialog("open");
+        });
+
+        $(".details").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            Title = "Location Details";
+            $("#dialogDetails").dialog("open");
+        });
+
+
+        $(".edit").click(function (event) {
+            event.preventDefault();
+            url = $(this).attr("href");
+            Title = "Edit Location";
+            $("#dialogCreate").dialog("open");
+        });
+
+        $("#btnCancel").click(function (event) {
+            $("#dialogCreate").dialog("close");
+        });
+
+
+
+    });
+</script>
+
+<div id="dialogCreate">
+</div>
+
+<div id="dialogDetails">
+</div>
+
+
+<h2>Organizations</h2>
+
+<p>
+    <a href="/Organization/Create" id="btnCreate" class="glyphicon glyphicon-plus" title="Create"></a>
+
+</p>
+<table class="table table-hover">
+    <tr style="background-color:#dddddd">
+        <th>
+            @Html.DisplayNameFor(model => model.NAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ADDRESS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTACT_1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTACT_2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CONTACT_3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FAX_NO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COUNTRY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EMAIL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_ON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CREATED_USER)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MODIFIED_ON)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MODIFIED_USER)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ADDRESS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTACT_1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTACT_2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CONTACT_3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FAX_NO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COUNTRY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EMAIL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_ON)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CREATED_USER)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MODIFIED_ON)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MODIFIED_USER)
+        </td>
+        <td>
+            <a href="/Organization/Edit/@item.ID" class="edit glyphicon glyphicon-pencil" title="Edit"></a>|
+            <a href="/Organization/Details/@item.ID" class="details glyphicon glyphicon-info-sign" title="Detail"></a>|
+            @*<a href="/Organization/Delete/@item.ID" class="glyphicon glyphicon-trash" title="Delete" onclick="return confirm('Are you sure to delete?');"></a>*@
+
+            @using (Html.BeginForm("Delete", "Location", new { id = item.ID }))
+            {
+                <input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Are you sure to delete?');" />
+            }
+
+        </td>
+    </tr>
+}
+
+</table>
+
+
+
+@{
+    if (TempData["MESSAGE"] != null)
+    {
+        Message message = (Message)TempData["MESSAGE"];
+        string finalMsg = "";
+
+        if (message.Type == MessageType.Error)
+        {
+            finalMsg = "Error: " + message.Description;
+        }
+        else
+        {
+            finalMsg = message.Description;
+        }
+
+        <script>
+            window.onload = function () {
+
+                //alert("@finalMsg");
+                $("#PopUpMessage").text("@finalMsg");
+                $("#ModelButton").click();
+            };
+        </script>
+    }
+}

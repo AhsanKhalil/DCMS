@@ -4,13 +4,7 @@
 
 @{
     ViewBag.Title = "Location";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@*----------------------------------------------------------------------------------------------------------*@
-<script src="~/Scripts/jquery-1.12.4.min.js"></script>
-<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
-<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 
 <script>
     $(document).ready(function () {
@@ -25,6 +19,9 @@
                 $(".ui-dialog-title").html(Title);
                 // $(".ui-dialog-titlebar").removeClass("ui-widget-header");
                 $(this).load(url);
+            },
+            buttons: {
+                Cancel: function () { $(this).dialog("close"); }
             },
         });
 
@@ -68,22 +65,21 @@
                 $(this).load(url);
             },
             buttons: {
-                Cancel: function () { $(this).dialog("close"); },
                 Ok: function () {
                     $(this).dialog("close");
                 }
             },
         });
 
-        if ('@TempData["Message"]' != "") {
+        @*if ('@TempData["Message"]' != "") {
             $("#dialogAlert").dialog("open");
-        }
+        }*@
 
 
         $("#btnCreate").click(function (event) {
             event.preventDefault();
             url = $(this).attr("href");
-            Title = "Create User";
+            Title = "Create Location";
             $("#dialogCreate").dialog("open");
         });
 
@@ -96,28 +92,29 @@
         $(".details").click(function (event) {
             event.preventDefault();
             url = $(this).attr("href");
+            Title = "Location Details";
             $("#dialogDetails").dialog("open");
         });
 
-        
+
         $(".edit").click(function (event) {
             event.preventDefault();
             url = $(this).attr("href");
-            Title = "Edit User";
+            Title = "Edit Location";
             $("#dialogCreate").dialog("open");
         });
 
         $("#btnCancel").click(function (event) {
             $("#dialogCreate").dialog("close");
         });
-        
+
 
 
     });
 </script>
 
 
-<div id="dialogAlert">
+@*<div id="dialogAlert">
     <p>
         @TempData["Message"]
 </p>
@@ -126,7 +123,7 @@
     <p>
         Are you sure to delete?
     </p>
-</div>
+</div>*@
 
 <div id="dialogCreate">
 </div>
@@ -134,131 +131,148 @@
 <div id="dialogDetails">
 </div>
 
-@*----------------------------------------------------------------------------------------------------------*@
 
 <h2>Locations</h2>
 
 <p>
-    @Html.ActionLink("New", "Create", null, new { id = "btnCreate" })
+    <a href="/Location/Create" id = "btnCreate" class="glyphicon glyphicon-plus" title="Create"></a>
+
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NAME)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ADDRESS)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CONTACT_1)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CONTACT_2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CONTACT_3)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FAX_NO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CITY)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EMAIL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CREATED_ON)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CREATED_USER)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MODIFIED_ON)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MODIFIED_USER)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NAME)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ADDRESS)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CONTACT_1)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CONTACT_2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CONTACT_3)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FAX_NO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CITY)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EMAIL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CREATED_ON)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CREATED_USER)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MODIFIED_ON)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MODIFIED_USER)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }, new { @class = "edit" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }, new { @class = "details" }) |
-            @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
-            @Html.ActionLink("Delete","Delete",new { id=item.ID },new { onclick = "return confirm('Are you sure to delete?');" })
-        </td>
-    </tr>
-}
+<div class="wrapper">
+    <div class="search-box">
+        <form class="form-inline">
+            <div class="form-group">
+                <input type="text" name="q" value="@ViewBag.searchQuery" class="search-text form-control" placeholder="Search..." />
+            </div>
+            <button type="submit" class="btn btn-info">Search</button>
+        </form>
+    </div>
+ </div>
+    <table class="table table-hover">
+        <tr style="background-color:#dddddd">
+            <th>
+                @Html.DisplayNameFor(model => model.NAME)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ADDRESS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CONTACT_1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CONTACT_2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CONTACT_3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FAX_NO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CITY)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EMAIL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CREATED_ON)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CREATED_USER)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MODIFIED_ON)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MODIFIED_USER)
+            </th>
+            <th>@Html.DisplayName("Action")</th>
+        </tr>
 
-</table>
-
-
-@*@{
-    if (TempData["MESSAGE"] != null)
-    {
-        Message message = (Message)TempData["MESSAGE"];
-        string finalMsg = "";
-
-        if (message.Type == MessageType.Error)
+        @foreach (var item in Model)
         {
-            finalMsg = "Error: " + message.Description;
-        }
-        else
-        {
-            finalMsg = message.Description;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NAME)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ADDRESS)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONTACT_1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONTACT_2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CONTACT_3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FAX_NO)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CITY)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EMAIL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CREATED_ON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CREATED_USER)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MODIFIED_ON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MODIFIED_USER)
+                </td>
+                <td>
+                    <a href="/Location/Edit/@item.ID" class="edit glyphicon glyphicon-pencil" title="Edit"></a>|
+                    <a href="/Location/Details/@item.ID" class="details glyphicon glyphicon-info-sign" title="Detail"></a>|
+                    @*<a href="/Location/Delete/@item.ID" class="glyphicon glyphicon-trash" title="Delete" onclick="return confirm('Are you sure to delete?');"></a>*@
+
+                    @using (Html.BeginForm("Delete", "Location", new { id = item.ID }))
+                    {
+                        @*<input type="submit" value="Delete" class="btn btn-default" onclick="return confirm('Are you sure to delete?');" />*@
+
+
+                        <button type="submit" style="background-color:transparent;border:none;color:#2a6496;" onclick="return confirm('Are you sure to delete?');">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    }
+
+                </td>
+            </tr>
         }
 
-        <script>
+    </table>
+
+
+    @{
+        if (TempData["MESSAGE"] != null)
+        {
+            Message message = (Message)TempData["MESSAGE"];
+            string finalMsg = "";
+
+            if (message.Type == MessageType.Error)
+            {
+                finalMsg = "Error: " + message.Description;
+            }
+            else
+            {
+                finalMsg = message.Description;
+            }
+
+            <script>
             window.onload = function () {
 
                 //alert("@finalMsg");
                 $("#PopUpMessage").text("@finalMsg");
                 $("#ModelButton").click();
             };
-
-            
-
-        </script>
-
-
+            </script>
+        }
     }
-}*@

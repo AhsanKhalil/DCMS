@@ -10,5 +10,10 @@ namespace DCMS.SERVICE
         LOCATION GetLocation(int id);
         void SaveLocation(LOCATION location);
         void UpdateLocation(LOCATION location);
+        List<ORGANIZATION> GetAllOrganization();
+        ORGANIZATION GetOrganization(int id);
+        void SaveOrganization(ORGANIZATION organization);
+        void UpdateOrganization(ORGANIZATION organization);
+        void DeleteOrganization(int id);
     }
 }

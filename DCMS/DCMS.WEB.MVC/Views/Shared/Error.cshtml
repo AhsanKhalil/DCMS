@@ -1,13 +1,14 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@model DCMS.WEB.MVC.Models.Message
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Error</h2>
+<h3>Details</h3>
+<p>@Html.DisplayFor(m => m.Description)</p>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

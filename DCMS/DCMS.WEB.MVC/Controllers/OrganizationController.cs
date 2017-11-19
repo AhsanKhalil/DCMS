@@ -6,38 +6,36 @@ using System.Web.Mvc;
 using DataObjects.Linq2SQL.Data;
 using DCMS.WEB.MVC.Models;
 
+
 namespace DCMS.WEB.MVC.Controllers
 {
-    public class LocationController : BaseController
+    public class OrganizationController : BaseController
     {
-        
-        public LocationController()
+        public OrganizationController()
         {
             TempData["MESSAGE"] = null;
         }
-
-        // GET: Location
+        // GET: Organization
         public ActionResult Index()
         {
             try
             {
-                List<LOCATION> locations = DCService.GetAllLocation();
-                return View(locations);
+                List<ORGANIZATION> organizations = DCService.GetAllOrganization();
+                return View(organizations);
             }
             catch (Exception e)
             {
                 return View("~/Views/Shared/Error.cshtml", new Message() { Description = e.Message });
             }
-
         }
 
-        // GET: Location/Details/5
+        // GET: Organization/Details/5
         public ActionResult Details(int id)
         {
             try
             {
-                LOCATION location = DCService.GetLocation(id);
-                return PartialView(location);
+                ORGANIZATION organization = DCService.GetOrganization(id);
+                return PartialView(organization);
             }
             catch (Exception e)
             {
@@ -45,53 +43,52 @@ namespace DCMS.WEB.MVC.Controllers
             }
         }
 
-        // GET: Location/Create
+        // GET: Organization/Create
         public ActionResult Create()
         {
             return PartialView();
         }
 
-        // POST: Location/Create
+        // POST: Organization/Create
         [HttpPost]
-        public ActionResult Create(LOCATION location)
+        public ActionResult Create(ORGANIZATION organization)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    location.CREATED_ON = DATE;
-                    location.MODIFIED_ON = DATE;
-                    location.CREATED_USER = USER;
-                    location.MODIFIED_USER = USER;
+                    organization.CREATED_ON = DATE;
+                    organization.MODIFIED_ON = DATE;
+                    organization.CREATED_USER = USER;
+                    organization.MODIFIED_USER = USER;
 
-                    DCService.SaveLocation(location);
+                    DCService.SaveOrganization(organization);
 
                     TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
-                    
-                    return RedirectToAction("Index", "Location");
+
+                    return RedirectToAction("Index", "Organization");
                 }
                 catch (Exception e)
                 {
-                    TempData["MESSAGE"] = new Message() {Type=MessageType.Error,Description=e.Message };
-                    return RedirectToAction("Index", "Location");
+                    TempData["MESSAGE"] = new Message() { Type = MessageType.Error, Description = e.Message };
+                    return RedirectToAction("Index", "Organization");
                 }
             }
             else
             {
                 TempData["MESSAGE"] = new Message() { Type = MessageType.Error, Description = "Please fill all required fields with valid data." };
-                return RedirectToAction("Index", "Location");
+                return RedirectToAction("Index", "Organization");
             }
         }
 
-        // GET: Location/Edit/5
+        // GET: Organization/Edit/5
         public ActionResult Edit(int id)
         {
             try
             {
+                ORGANIZATION organization = DCService.GetOrganization(id);
+                return PartialView(organization);
 
-                LOCATION location = DCService.GetLocation(id);
-                return PartialView(location);
-                
             }
             catch (Exception e)
             {
@@ -100,23 +97,23 @@ namespace DCMS.WEB.MVC.Controllers
             }
         }
 
-        // POST: Location/Edit/5
+        // POST: Organization/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, LOCATION location)
+        public ActionResult Edit(int id, ORGANIZATION organization)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
 
-                    location.MODIFIED_ON = DATE;
-                    location.MODIFIED_USER = USER;
+                    organization.MODIFIED_ON = DATE;
+                    organization.MODIFIED_USER = USER;
 
-                    DCService.UpdateLocation(location);
+                    DCService.UpdateOrganization(organization);
 
                     TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Successfully Saved." };
 
-                    return RedirectToAction("Index", "Location");
+                    return RedirectToAction("Index", "Organization");
 
                 }
                 catch (Exception e)
@@ -126,20 +123,18 @@ namespace DCMS.WEB.MVC.Controllers
             }
             return RedirectToAction("Edit", id);
         }
-
-        // POST: Location/Delete/5
-  
+        // POST: Organization/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)//, LOCATION location)
+        public ActionResult Delete(int id)
         {
             try
             {
-                DCService.DeleteLocation(id);
-                
+                DCService.DeleteOrganization(id);
+
 
                 TempData["MESSAGE"] = new Message() { Type = MessageType.Inform, Description = "Location Delete Successfully." };
-                
-                return RedirectToAction("Index", "Location");
+
+                return RedirectToAction("Index", "Organization");
 
             }
             catch (Exception e)
